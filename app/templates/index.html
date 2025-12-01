@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Summarizer{% endblock %}
+
+{% block content %}
+<div class="card bg-light p-4 mb-5">
+    <h1 class="mb-4">Summarize a New Court Order</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="order_text" class="form-label">Paste the court order here...</label>
+            <textarea class="form-control" id="order_text" name="order_text" rows="10">{{ original_text or '' }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="file_input" class="form-label">...or upload a document (.pdf, .docx)</label>
+            <input class="form-control" type="file" id="file_input" name="file_input" accept=".pdf,.docx">
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg">Summarize</button>
+    </form>
+</div>
+
+{% if result %}
+<div class="card">
+    <div class="card-header">
+        <h3>Analysis Result</h3>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">📌 Summary</h5>
+        <p class="card-text">{{ result['Summary'] }}</p>
+        <hr>
+        <h5 class="card-title">📊 Key Information</h5>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><b>Date:</b> {{ result['Date'] }}</li>
+            <li class="list-group-item"><b>Section:</b> {{ result['Section'] }}</li>
+            <li class="list-group-item"><b>Act:</b> {{ result['Act'] }}</li>
+            <li class="list-group-item"><b>Petitioner:</b> {{ result['Petitioner'] }}</li>
+        </ul>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
